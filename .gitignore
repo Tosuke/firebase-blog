@@ -70,6 +70,7 @@ typings/
 
 # Nuxt generate
 dist
+public/_nuxt
 
 # vuepress build output
 .vuepress/dist
@@ -80,6 +81,8 @@ dist
 # IDE
 .idea
 
+# Service Worker
+src/static/sw.js
+
 # firebase
 .firebase
-.firebaserc

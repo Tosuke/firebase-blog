@@ -1,6 +1,6 @@
 # firebase-blog
 
-> My groovy Nuxt.js project
+> My impeccable Nuxt.js project
 
 ## Build Setup
 

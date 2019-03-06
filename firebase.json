@@ -1,12 +1,12 @@
 {
   "firestore": {
-    "rules": "firebase/firestore.rules",
-    "indexes": "firebase/firestore.indexes.json"
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   },
   "functions": {
   },
   "hosting": {
-    "public": "dist",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -14,12 +14,14 @@
     ],
     "rewrites": [
       {
-        "source": "/",
-        "function": "render"
+        "source": "/test", "function": "test"
+      },
+      {
+        "source": "/images/**", "function": "serve"
       }
     ]
   },
   "storage": {
-    "rules": "firebase/storage.rules"
+    "rules": "storage.rules"
   }
 }
