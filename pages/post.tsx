@@ -7,10 +7,10 @@ import { Post, fetchPost } from '../lib/post'
 import { toISODateString } from '../lib/date'
 
 const PostContent: React.FC<{ post: Post }> = ({ post }) => (
-  <Layout>
+  <Layout title={post.title} description={post.description}>
     <section className="section">
       <header className="post-header">
-        <h4 className="has-text-weight-light has-text-black">{toISODateString(post.createdAt)}</h4>
+        <h4 className="has-text-black is-size-6">{toISODateString(post.createdAt)}</h4>
         <h1 className="has-text-weight-bold has-text-black has-text-centered is-size-4">{post.title}</h1>
       </header>
       <article>

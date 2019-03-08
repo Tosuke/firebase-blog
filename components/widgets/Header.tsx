@@ -1,16 +1,15 @@
 import * as React from 'react'
 import Link from 'next/link'
 
-const Header: React.FC<{ title: string; description: string }> = ({ title, description }) => (
+const Header: React.FC<{ title: string }> = ({ title }) => (
   <header>
     <section className="hero is-primary is-small is-bold">
       <div className="hero-body container has-text-centered">
         <Link href="/">
           <a>
-            <h1 className="title">{title}</h1>
+            <h1 className="is-size-3 has-text-weight-bold">{title}</h1>
           </a>
         </Link>
-        <h2 className="subtitle">{description}</h2>
       </div>
     </section>
   </header>
