@@ -1,9 +1,18 @@
 const withTypescript = require('@zeit/next-typescript')
 const withSass = require('@zeit/next-sass')
+const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
+const dotenv = require('dotenv-safe')
 
-const env = {
-  title: 'Tosuke\'s weblog',
-  description: '役に立{つ,たない}技術情報やポエム'
-}
+const env = dotenv.load().parsed
 
-module.exports = withTypescript(withSass({ env }))
+const { BUNDLE_ANALYZE } = process.env
+
+module.exports = withTypescript(
+  withSass(
+    withBundleAnalyzer({
+      env,
+      analyzeServer: ['server', 'both'].includes(BUNDLE_ANALYZE),
+      analyzeBrowser: ['browser', 'both'].includes(BUNDLE_ANALYZE),
+    }),
+  ),
+)
