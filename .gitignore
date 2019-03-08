@@ -2,4 +2,6 @@
 /.next
 /.firebase
 /.vscode
+/.firebaserc
+/public
 /.env

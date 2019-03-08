@@ -1,0 +1,9 @@
+## Compiled JavaScript files
+**/*.js
+**/*.js.map
+
+src/router.ts
+*.log
+
+node_modules/
+.next

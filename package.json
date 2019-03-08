@@ -8,15 +8,20 @@
   "scripts": {
     "dev": "ts-node tools/server.ts",
     "build": "run-s build:clean build:next build:static",
-    "build:clean": "rimraf .next public/_next/static",
+    "build:clean": "rimraf .next public/_next/static functions/.next",
     "build:next": "next build",
     "build:static": "cpx \".next/static/**/*\" public/_next/static",
+    "build:server": "cpx \".next/**/*\" functions/.next",
+    "generate": "run-s build generate:file deploy:static",
+    "generate:file": "ts-node tools/generate.ts",
+    "deploy:static": "firebase deploy --only hosting",
     "analyze": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
     "date-fns": "^1.30.1",
     "dotenv-safe": "^6.1.0",
     "express": "^4.16.4",
+    "firebase-admin": "^7.0.0",
     "hoist-non-react-statics": "^3.3.0",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^8.0.3",
