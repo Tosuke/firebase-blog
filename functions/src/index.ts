@@ -69,7 +69,13 @@ export const serve = functions.https.onRequest(async (req, res) => {
             'Content-Type': contentType,
             'Cache-Control': 'max-age=300, s-maxage=3600',
           })
-          .end()
+        if (contentType.startsWith('text/html')) {
+          const rs = storage.bucket().file('404.html').createReadStream()
+          rs.pipe(res)
+          rs.on('end', () => res.end())
+        } else {
+          res.end()
+        }
       }
     })
     const rs = file.createReadStream()

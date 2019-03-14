@@ -1,6 +1,7 @@
 import dotenv from 'dotenv-safe'
 dotenv.config()
 
+import fs from 'fs'
 import * as firebase from 'firebase-admin'
 import fetch from 'isomorphic-unfetch'
 import next from 'next'
@@ -32,9 +33,18 @@ async function main() {
     console.log(path)
   }
 
+  async function render404(): Promise<void> {
+    const res = await router.resolve({ pathname: '/hogehogepiyopiyomogemoge' })
+    const file = bucket.file('404.html')
+    await file.save(res.content, { contentType: res.contentType })
+    fs.writeFileSync('public/404.html', res.content)
+    console.log('404 Page')
+  }
+
   for await(const path of paths()) {
     tasks.push(renderPath(path))
   }
+  tasks.push(render404())
 
   await Promise.all(tasks)
 }
