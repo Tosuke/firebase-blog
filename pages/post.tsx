@@ -3,7 +3,7 @@ import Layout from '../components/layouts/default'
 import ErrorPage from '../components/pages/Error'
 import { withInitialProps } from '../components/pages/withInitialProps'
 import { Either, right, left, mapEither } from '../lib/either'
-import { Post, fetchPost } from '../lib/post'
+import { Post, fetchPostBySlug } from '../lib/post'
 import { toISODateString } from '../lib/date'
 
 const PostContent: React.FC<{ post: Post }> = ({ post }) => (
@@ -33,7 +33,7 @@ const PostPage: React.FC<{ post: EitherPost }> = ({ post }) =>
 export default withInitialProps(
   async ({ query }) => {
     const slug = query.slug as string
-    const post = await fetchPost(slug)
+    const post = await fetchPostBySlug(slug)
     return {
       post: post ? right(post) : left({ statusCode: 404 }),
     }

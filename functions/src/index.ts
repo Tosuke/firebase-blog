@@ -1,7 +1,8 @@
 import * as functions from 'firebase-functions'
-import * as firebase from 'firebase-admin'
+import firebase from './firebase'
+import dotenv from 'dotenv'
+dotenv.config()
 
-firebase.initializeApp()
 const storage = firebase.storage()
 
 export const test = functions.https.onRequest((req, res) => {

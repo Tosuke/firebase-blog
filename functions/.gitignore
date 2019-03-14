@@ -4,6 +4,7 @@
 
 src/router.ts
 *.log
+.env
 
 node_modules/
 .next

@@ -1,44 +1,49 @@
-export interface PostEntry {
-  id: string
-  slug: string
-  createdAt: Date
-  updatedAt: Date
-  title: string
-  description: string
-}
+import { DocumentSnapshot } from '@firebase/firestore-types'
+import fetch from 'isomorphic-unfetch'
+import { willBeFirestore } from './firebase'
+import { Post, PostEntry } from '../types/post'
+export { Post, PostEntry} from '../types/post'
 
-export interface Post extends PostEntry {
-  html: string
-}
+const willBePostsCollection = willBeFirestore.then(db => db.collection('posts'))
 
-const mockPosts: Post[] = [
-  {
-    id: '0',
-    slug: 'test1',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    title: 'テストその1',
-    description: 'テスト1の説明',
-    html:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  },
-  {
-    id: '1',
-    slug: 'test2',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    title: 'テストその2',
-    description: 'テスト2の説明',
-    html: 'テスト2の内容',
-  },
-]
-
-export async function* fetchEntries(): AsyncIterable<PostEntry> {
-  for (const entry of mockPosts) {
-    yield entry
+function getPostEntryFromDocument(doc: DocumentSnapshot): PostEntry {
+  const data = doc.data()!
+  return {
+    id: doc.id,
+    slug: data.slug,
+    createdAt: data.createdAt.toDate(),
+    updatedAt: data.updatedAt.toDate(),
+    title: data.title,
+    description: data.description,
   }
 }
 
-export async function fetchPost(slug: string): Promise<Post | undefined> {
-  return mockPosts.find(p => p.slug === slug)
+function getPostFromDocument(doc: DocumentSnapshot): Post {
+  return {
+    ...getPostEntryFromDocument(doc),
+    html: doc.data()!.html,
+  }
+}
+
+export async function fetchEntries(): Promise<PostEntry[]> {
+  const posts$ = await willBePostsCollection
+  const entries: PostEntry[] = await posts$
+    .orderBy('createdAt')
+    .get()
+    .then(qs => qs.docs.map(getPostEntryFromDocument))
+  return entries
+}
+
+export async function fetchPostBySlug(slug: string): Promise<Post | undefined> {
+  const postJson = await fetch(`${process.env.origin}/posts/${slug}.json`).then(res => {
+    if (res.status === 200) return res.json()
+    return undefined
+  })
+  if (postJson == null) return undefined
+
+  return {
+    ...postJson,
+    createdAt: new Date(postJson.createdAt),
+    updatedAt: new Date(postJson.updatedAt)
+  }
 }

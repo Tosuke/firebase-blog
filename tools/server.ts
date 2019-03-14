@@ -1,9 +1,11 @@
 import express from 'express'
 import next from 'next'
-import router from '../router'
+import router from '../functions/src/router'
 
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000
+
+process.env.isServer = 'true'
 
 const app = next({ dev })
 

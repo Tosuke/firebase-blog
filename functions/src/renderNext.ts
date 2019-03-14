@@ -1,7 +1,7 @@
 import { ServerResponse } from 'http'
 import httpMocks from 'node-mocks-http'
-import next from 'next'
-import router from '../router'
+const next = require('next')
+import router from './router'
 
 const app = next({ dev: false })
 const prepareAppTask = app.prepare()
