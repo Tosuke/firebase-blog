@@ -8,23 +8,29 @@
   },
   "hosting": {
     "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "headers": [
+      {
+        "source": "/_next/static/**/*.@(js|css|json)",
+        "headers": [{ "key": "Cache-Control", "value": "public,max-age=86400,immutable,s-maxage=86400" }]
+      }
     ],
     "rewrites": [
       {
-        "source": "/test", "function": "test"
+        "source": "/test",
+        "function": "test"
       },
       {
-        "source": "/", "function": "serve"
+        "source": "/",
+        "function": "serve"
       },
       {
-        "source": "/posts/**", "function": "serve"
+        "source": "/posts/**",
+        "function": "serve"
       },
       {
-        "source": "/images/**", "function": "serve"
+        "source": "/images/**",
+        "function": "serve"
       }
     ]
   },
