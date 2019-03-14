@@ -13,9 +13,7 @@ const PostContent: React.FC<{ post: Post }> = ({ post }) => (
         <h4 className="has-text-black is-size-6">{toISODateString(post.createdAt)}</h4>
         <h1 className="has-text-weight-bold has-text-black has-text-centered is-size-4">{post.title}</h1>
       </header>
-      <article>
-        <p className="content" dangerouslySetInnerHTML={{ __html: post.html }} />
-      </article>
+      <article className="content" dangerouslySetInnerHTML={{ __html: post.html }} />
       <style jsx>{`
         .post-header {
           margin-bottom: 1rem;

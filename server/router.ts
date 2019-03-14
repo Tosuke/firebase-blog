@@ -12,6 +12,8 @@ function res(input: { status?: number, contentType: string, content: Buffer }): 
   }
 }
 
+process.env.server = 'true'
+
 export function createRouter(nextServer: Server): UniversalRouter<ResolveContext, Response> {
   const routes: Route<ResolveContext, Response>[] = [
     {
