@@ -2,11 +2,9 @@
 **/*.js
 **/*.js.map
 
-# Typescript v1 declaration files
-typings/
+src/router.ts
+*.log
+.env
 
 node_modules/
-
-.nuxt
-nuxt.config.ts
-tsconfig.json
+.next
