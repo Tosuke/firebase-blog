@@ -1,7 +1,6 @@
 import * as functions from 'firebase-functions'
-import firebase from './firebase'
-import dotenv from 'dotenv'
-dotenv.config()
+import firebase from 'firebase-admin'
+firebase.initializeApp()
 
 const storage = firebase.storage()
 
