@@ -1,6 +1,5 @@
-import { Post } from '../types/post'
-import { Response } from './type'
-import firebase from './firebase'
+import { Response } from '../type'
+import firebase from '../firebase'
 
 const posts = firebase.firestore().collection('posts')
 

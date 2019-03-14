@@ -1,7 +1,7 @@
 import { Server } from 'next'
 import { ServerResponse } from 'http'
 import httpMocks from 'node-mocks-http'
-import { Response } from './type'
+import { Response } from '../type'
 
 export async function renderNext(app: Server, path: string, query: any): Promise<Response> {
   const req = httpMocks.createRequest({

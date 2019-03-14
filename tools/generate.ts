@@ -51,6 +51,7 @@ async function main() {
 
 async function* paths(): AsyncIterable<string> {
   yield '/'
+  yield '/posts.json'
   const postPaths = ['test1', 'test2'].map(slug => `/posts/${slug}`)
   yield* postPaths
   yield* postPaths.map(path => `${path}.json`)

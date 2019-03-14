@@ -16,22 +16,11 @@
       }
     ],
     "rewrites": [
-      {
-        "source": "/test",
-        "function": "test"
-      },
-      {
-        "source": "/",
-        "function": "serve"
-      },
-      {
-        "source": "/posts/**",
-        "function": "serve"
-      },
-      {
-        "source": "/images/**",
-        "function": "serve"
-      }
+      { "source": "/test", "function": "test" },
+      { "source": "/", "function": "serve" },
+      { "source": "/posts.json", "function": "serve" },
+      { "source": "/posts/**", "function": "serve" },
+      { "source": "/images/**", "function": "serve" }
     ]
   },
   "storage": {

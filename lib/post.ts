@@ -26,18 +26,30 @@ function getPostFromDocument(doc: DocumentSnapshot): Post {
 }
 
 export async function fetchEntries(): Promise<PostEntry[]> {
-  const posts$ = await willBePostsCollection
-  const entries: PostEntry[] = await posts$
-    .orderBy('createdAt')
-    .get()
-    .then(qs => qs.docs.map(getPostEntryFromDocument))
-  return entries
+  if (process.env.server) {
+    const posts$ = await willBePostsCollection
+    const entries: PostEntry[] = await posts$
+      .orderBy('createdAt')
+      .get()
+      .then(qs => qs.docs.map(getPostEntryFromDocument))
+    return entries
+  } else {
+    const entriesJson = await fetch('/posts.json').then(res => res.json())
+    return entriesJson.map((entryJson: any) => ({
+      ...entryJson,
+      createdAt: new Date(entryJson.createdAt),
+      updatedAt: new Date(entryJson.updatedAt),
+    }))
+  }
 }
 
 export async function fetchPostBySlug(slug: string): Promise<Post | undefined> {
   if (process.env.server) {
     const posts = await willBePostsCollection
-    const result = await posts.where('slug', '==', slug).limit(1).get()
+    const result = await posts
+      .where('slug', '==', slug)
+      .limit(1)
+      .get()
     if (result.empty) return undefined
     return getPostFromDocument(result.docs[0])
   } else {

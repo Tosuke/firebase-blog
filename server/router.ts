@@ -1,8 +1,9 @@
 import UniversalRouter, { Route, ResolveContext } from 'universal-router'
 import { Server } from 'next'
 import { Response } from './type'
-import { renderNext } from './renderNext'
-import { renderPost } from './renderPost'
+import { renderNext } from './renderers/renderNext'
+import { renderRootEntries } from './renderers/renderRootEntries'
+import { renderPost } from './renderers/renderPost'
 
 
 function res(input: { status?: number, contentType: string, content: Buffer }): Response {
@@ -23,6 +24,10 @@ export function createRouter(nextServer: Server): UniversalRouter<ResolveContext
     {
       path: '/posts/:slug',
       action: (_, { slug }) => renderNext(nextServer, '/post', { slug })
+    },
+    {
+      path: '/posts.json',
+      action: () => renderRootEntries()
     },
     {
       path: '(.*)',

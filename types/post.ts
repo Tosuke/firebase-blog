@@ -5,6 +5,7 @@ export interface PostEntry {
   updatedAt: Date
   title: string
   description: string
+  html?: string
 }
 
 export interface Post extends PostEntry {
