@@ -1,6 +1,7 @@
 const withTypescript = require('@zeit/next-typescript')
 const withSass = require('@zeit/next-sass')
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const dotenv = require('dotenv-safe')
 
 const env = dotenv.load().parsed
@@ -13,6 +14,13 @@ module.exports = withTypescript(
       env,
       analyzeServer: ['server', 'both'].includes(BUNDLE_ANALYZE),
       analyzeBrowser: ['browser', 'both'].includes(BUNDLE_ANALYZE),
+
+      webpack(config) {
+        if (config.mode === 'production' && config.optimization.minimizer) {
+          config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}))
+        }
+        return config
+      }
     }),
   ),
 )
