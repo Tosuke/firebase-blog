@@ -7,7 +7,7 @@ import fetch from 'isomorphic-unfetch'
 import next from 'next'
 import { createRouter } from '../server/router'
 
-(Symbol as any).asyncIterator = Symbol.asyncIterator || Symbol('Symbol.asyncIterator')
+if(Symbol.asyncIterator == null) (Symbol as any).asyncIterator = Symbol('Symbol.asyncIterator')
 
 const storage = firebase.storage()
 const bucket = storage.bucket()

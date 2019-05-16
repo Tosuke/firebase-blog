@@ -1,8 +1,8 @@
 import { DocumentSnapshot } from '@firebase/firestore-types'
 import fetch from 'isomorphic-unfetch'
 import { willBeFirestore } from './firebase'
-import { Post, PostEntry } from '../types/post'
-export { Post, PostEntry } from '../types/post'
+import { Post, PostEntry } from '../../types/post'
+export { Post, PostEntry } from '../../types/post'
 
 const willBePostsCollection = willBeFirestore.then(db => db.collection('posts'))
 

@@ -1,11 +1,12 @@
 import express from 'express'
 import next from 'next'
 import { createRouter } from './router'
+import '@zeit/next-preact/alias'
 
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000
 
-const app = next({ dev })
+const app = next({ dev, dir: './view' })
 
 app
   .prepare()
