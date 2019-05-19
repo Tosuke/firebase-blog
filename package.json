@@ -9,17 +9,17 @@
     "node": "10"
   },
   "scripts": {
-    "dev": "ts-node server/server.ts",
+    "dev": "ts-node view/server.ts",
     "build": "run-s build:clean build:next build:static",
     "build:clean": "rimraf .next public/_next/static functions/.next",
-    "build:next": "next build",
+    "build:next": "next build ./view",
     "build:static": "cpx \".next/static/**/*\" public/_next/static",
     "build:server": "cpx \".next/**/*\" functions/.next",
     "build:env": "cpx .env functions",
     "generate": "run-s build generate:file deploy:static",
     "generate:file": "ts-node tools/generate.ts",
     "deploy:static": "firebase deploy --only hosting",
-    "analyze": "cross-env BUNDLE_ANALYZE=browser next build"
+    "analyze": "cross-env BUNDLE_ANALYZE=browser next build ./view"
   },
   "dependencies": {
     "date-fns": "^1.30.1",
