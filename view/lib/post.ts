@@ -1,8 +1,8 @@
 import { DocumentSnapshot } from '@firebase/firestore-types'
 import fetch from 'isomorphic-unfetch'
 import { willBeFirestore } from './firebase'
-import { Post, PostEntry } from '../../types/post'
-export { Post, PostEntry } from '../../types/post'
+import { Post, PostEntry } from '../types/post'
+export { Post, PostEntry } from '../types/post'
 
 const willBePostsCollection = willBeFirestore.then(db => db.collection('posts'))
 
@@ -26,7 +26,7 @@ function getPostFromDocument(doc: DocumentSnapshot): Post {
 }
 
 export async function fetchEntries(): Promise<PostEntry[]> {
-  if (process.env.server) {
+  if (true || process.env.server) {
     const posts$ = await willBePostsCollection
     const entries: PostEntry[] = await posts$
       .orderBy('createdAt')
@@ -44,7 +44,7 @@ export async function fetchEntries(): Promise<PostEntry[]> {
 }
 
 export async function fetchPostBySlug(slug: string): Promise<Post | undefined> {
-  if (process.env.server) {
+  if (true || process.env.server) {
     const posts = await willBePostsCollection
     const result = await posts
       .where('slug', '==', slug)
