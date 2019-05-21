@@ -9,17 +9,30 @@ const env = dotenv.load().parsed
 
 const { BUNDLE_ANALYZE } = process.env
 
-const plugins = [withTypescript, withSass, withBundleAnalyzer, withPreact, ]
+const plugins = [withTypescript, withSass, withBundleAnalyzer]
 
 const config = {
   env,
   analyzeServer: ['server', 'both'].includes(BUNDLE_ANALYZE),
   analyzeBrowser: ['browser', 'both'].includes(BUNDLE_ANALYZE),
 
-  webpack(config) {
+  webpack(config, options) {
     if (config.mode === 'production' && config.optimization.minimizer) {
       config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}))
     }
+
+    if (options.isServer) {
+      config.externals = ['react', 'react-dom', ...config.externals]
+    }
+
+    config.resolve.alias = {
+      react$: 'preact/compat',
+      'react-dom$': 'preact/compat',
+      react: 'preact/compat',
+      'react-dom': 'preact/compat',
+      ...config.resolve.alias
+    }
+
     return config
   },
 }

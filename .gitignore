@@ -5,3 +5,4 @@
 /.firebaserc
 /public
 /.env
+*.log
